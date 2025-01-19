@@ -1,0 +1,27 @@
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  application:
+    name: auth-service
+  jpa:
+    hibernate:
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+  datasource:
+    driver: ${db-driver}
+    url: ${db-url}
+    username: ${db-username}
+    password: ${db-password}
+  cloud:
+    config:
+      enabled: true
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        preferIpAddress: true
+        instanceId: ${spring.application.name}:${server.address}:${server.port}
+        port: ${server.port}
+        #healthCheckUrl: http://localhost:8089/auth/actuator/health
+        healthCheckPath: /auth/actuator/health
+        healthCheckInterval: 5s
