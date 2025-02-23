@@ -1,4 +1,6 @@
 spring:
+  codec:
+    max-in-memory-size: 50MB
   main:
     allow-bean-definition-overriding: true
     web-application-type: reactive
@@ -6,6 +8,9 @@ spring:
     name: sms-api-gateway-service
   cloud:
     gateway:
+      httpClient:
+        connect-timeout: 300000
+        response-timeout: 60s
       routes:
       - id: auth-service
         uri: lb://sms-auth-service
@@ -14,6 +19,13 @@ spring:
         filters:
           - StripPrefix=1
           - RewritePath=/auth-service(?<segment>/?.*), $\{segment}
+      - id: society-mgmt-service
+        uri: lb://society-mgmt-service
+        predicates:
+          - Path=/api/society-mgmt-service/**
+        filters:
+          - StripPrefix=1
+          - RewritePath=/society-mgmt-service(?<segment>/?.*), $\{segment}
     config:
       enabled: true
     consul:

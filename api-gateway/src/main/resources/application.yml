@@ -1,5 +1,6 @@
 server:
   port: 8085
+  connection-timeout: 60000
   servlet:
     context-path: /api
 management:

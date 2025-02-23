@@ -1,0 +1,31 @@
+server:
+  port: 8090
+  connection-timeout: 60000
+  tomcat:
+    use-response-buffering: false
+  servlet:
+    context-path: /sms
+management:
+  endpoint:
+    metrics:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus
+    prometheus:
+      enabled: true
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+    health:
+      show-details: always
+spring:
+  jackson:
+    default-property-inclusion: non_null
+
+file:
+  upload-society-dir: D:/Ashish/JavaBackendProjects/SocietyManagementSystem/SocietyDocuments/society
+  upload-profile-dir: D:/Ashish/JavaBackendProjects/SocietyManagementSystem/SocietyDocuments/profile
+  upload-meeting-dir: D:/Ashish/JavaBackendProjects/SocietyManagementSystem/SocietyDocuments/meeting
