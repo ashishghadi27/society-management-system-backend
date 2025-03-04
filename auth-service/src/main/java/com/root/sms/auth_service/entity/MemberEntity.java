@@ -8,12 +8,12 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "users")
+@Table(name = "members")
 @Data
 public class MemberEntity {
 
     @Id
-    @Column(name = "id")
+    @Column(name = "mid")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -32,11 +32,11 @@ public class MemberEntity {
     @Column(name = "type")
     private String type;
 
-    @Column(name = "sid")
-    private Long societyId;
-
     @Column(name = "rid")
     private Long roomId;
+
+    @Column(name = "approved")
+    private Boolean approved;
 
     @CreationTimestamp
     @Column(name = "created_At", columnDefinition = "TIMESTAMP")
