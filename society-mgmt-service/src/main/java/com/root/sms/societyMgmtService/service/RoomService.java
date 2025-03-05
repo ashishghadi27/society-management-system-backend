@@ -4,7 +4,10 @@ import com.root.sms.societyMgmtService.entity.Room;
 import com.root.sms.societyMgmtService.vo.RoomVO;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public interface RoomService {
-    Room add(RoomVO room);
+    List<Room> add(List<RoomVO> roomList);
+    List<Room> getRooms(Long sid);
 }

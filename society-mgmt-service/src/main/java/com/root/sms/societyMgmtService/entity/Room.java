@@ -1,7 +1,5 @@
 package com.root.sms.societyMgmtService.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,18 +16,12 @@ public class Room {
     @Column(name = "rid")
     private Long rid;
 
+    @Column(name = "sid")
+    private Long societyId;
+
     @Column(name = "room_no")
     private String roomNo;
 
     @Column(name = "room_size")
     private String roomSize;
-
-    @ManyToOne
-    @JoinColumn(name = "sid", nullable = false)
-    @JsonIgnore
-    private Society society;
-
-    @OneToOne(mappedBy = "room", cascade = CascadeType.ALL)
-    @JsonBackReference
-    private Member member;
 }

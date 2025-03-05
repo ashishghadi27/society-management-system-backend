@@ -31,7 +31,7 @@ public class PreFilterHelper {
         UUID uuid = UUID.randomUUID();
         String sessionId = uuid.toString();
 
-        serverHttpRequest.mutate().headers((httpHeaders) -> {
+        serverHttpRequest = serverHttpRequest.mutate().headers((httpHeaders) -> {
             String session = new HttpCookie("session-id", sessionId).toString();
             httpHeaders.set("Cookie", session);
         }).build();

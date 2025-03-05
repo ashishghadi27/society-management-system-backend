@@ -51,9 +51,7 @@ public class PrePostFilter implements GlobalFilter, Ordered {
             String requestUrl = serverHttpRequest.getURI().toString();
             if(isWhiteListedUrl(requestUrl)){
                 serverHttpRequest = prefilterHelper.createSession(serverHttpRequest);
-                ServerWebExchange preResponseExchange = exchange.mutate().request(serverHttpRequest).build();
-                ServerHttpResponse response = exchange.getResponse();
-                ServerWebExchange finalExchange = preResponseExchange.mutate().request(serverHttpRequest).response(response).build();
+                ServerWebExchange finalExchange = exchange.mutate().request(serverHttpRequest).build();
                 return chain.filter(finalExchange);
             }
             else {

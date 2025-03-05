@@ -32,13 +32,13 @@ public class ParkingSpaceAllotmentServiceImpl implements ParkingSpaceAllotmentSe
                 .orElseThrow(() -> new ResourceNotFoundException("Member", "id", memberId));
         ParkingSpace parkingSpace = parkingSpaceRepository.findById(parkingSpaceId)
                 .orElseThrow(() -> new ResourceNotFoundException("Parking Space", "id", parkingSpaceId));
-        if (member.getRoom().getSociety().equals(parkingSpace.getSociety())){
-            ParkingSpaceAllotment parkingSpaceAllotment = new ParkingSpaceAllotment();
-            parkingSpaceAllotment.setMember(member);
-            parkingSpaceAllotment.setParkingSpace(parkingSpace);
-            parkingSpaceAllotmentRepository.save(parkingSpaceAllotment);
-            return parkingSpaceAllotment;
-        }
+//        if (member.getRoom().getSociety().equals(parkingSpace.getSociety())){
+//            ParkingSpaceAllotment parkingSpaceAllotment = new ParkingSpaceAllotment();
+//            parkingSpaceAllotment.setMember(member);
+//            parkingSpaceAllotment.setParkingSpace(parkingSpace);
+//            parkingSpaceAllotmentRepository.save(parkingSpaceAllotment);
+//            return parkingSpaceAllotment;
+//        }
         return null;
     }
 }

@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 public interface SocietyRepository extends JpaRepository<Society,Long> {
     List<Society> findByIsApprovedTrue();
-    List<Society> findByNameContainingIgnoreCaseAndIsApprovedTrue(String name);
+    List<Society> findBySidAndIsApprovedTrue(Long id);
 }

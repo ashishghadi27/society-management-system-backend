@@ -14,7 +14,6 @@ import com.root.sms.societyMgmtService.vo.SocietyFileVO;
 import com.root.sms.societyMgmtService.vo.SocietyVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -30,10 +29,10 @@ public class SocietyServiceImpl implements SocietyService {
     private final SocietyFilesRepository societyFilesRepository;
 
     @Override
-    public List<SocietyVO> getSocietiesList(String name) {
+    public List<SocietyVO> getSocietiesList(Long id) {
         List<Society> societyList;
-        societyList = (name != null && !name.isEmpty()) ?
-                societyRepository.findByNameContainingIgnoreCaseAndIsApprovedTrue(name) :
+        societyList = (id != 0) ?
+                societyRepository.findBySidAndIsApprovedTrue(id) :
                 societyRepository.findByIsApprovedTrue();
         List<SocietyVO> societyVOList = new ArrayList<>();
         for (Society society : societyList){
@@ -44,6 +43,7 @@ public class SocietyServiceImpl implements SocietyService {
             societyVO.setAddressLine2(society.getAddressLine2());
             societyVO.setPlotNumber(society.getPlotNumber());
             societyVO.setProfilePic(society.getProfilePic());
+            societyVO.setParkingAvailable(society.getParkingAvailable());
             societyVOList.add(societyVO);
         }
         return societyVOList;
@@ -63,7 +63,8 @@ public class SocietyServiceImpl implements SocietyService {
             society.setParkingAvailable(societyVO.getParkingAvailable());
             society = societyRepository.save(society);
             saveSocietyFiles(society, societyVO.getFiles());
-            return new GenericResponseVO("Data Saved", null);
+            societyVO.setSid(society.getSid());
+            return new GenericResponseVO("Data Saved", societyVO);
         }
         catch (GlobalException e) {
             log.error(LoggingConstants.LOG_ERROR_FORMAT, methodName,

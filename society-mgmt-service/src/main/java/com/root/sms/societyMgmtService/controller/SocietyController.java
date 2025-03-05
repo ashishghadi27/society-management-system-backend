@@ -19,8 +19,9 @@ public class SocietyController {
     private final SocietyService societyService;
 
     @GetMapping("/get")
-    public List<SocietyVO> getSocietiesList(@RequestParam(required = false) String name) {
-        return societyService.getSocietiesList(name);
+    public ResponseEntity<GenericResponseVO> getSocietiesList(@RequestParam(name = "id", required = false, defaultValue = "0") Long id) {
+        return new ResponseEntity<>(new GenericResponseVO("SUCCESS",
+                societyService.getSocietiesList(id)), HttpStatus.CREATED);
     }
 
     @PostMapping("/register")

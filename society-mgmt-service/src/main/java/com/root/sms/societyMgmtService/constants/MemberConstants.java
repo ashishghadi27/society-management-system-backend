@@ -1,4 +1,4 @@
-package com.root.sms.auth_service.constants;
+package com.root.sms.societyMgmtService.constants;
 
 public enum MemberConstants {
     MEMBER,

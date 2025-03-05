@@ -8,7 +8,7 @@ import java.util.List;
 
 @Service
 public interface SocietyService {
-    List<SocietyVO> getSocietiesList(String name);
+    List<SocietyVO> getSocietiesList(Long id);
 
     GenericResponseVO register(SocietyVO societyVO);
 
