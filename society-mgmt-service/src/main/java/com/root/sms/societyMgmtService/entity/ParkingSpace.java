@@ -32,13 +32,8 @@ public class ParkingSpace {
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime updatedAt;
 
-    @ManyToOne
-    @JoinColumn(name = "sid", nullable = false)
-    @JsonIgnore
-    private Society society;
-
-    @OneToMany(mappedBy = "parkingSpace", cascade = CascadeType.ALL)
-    private List<ParkingSpaceAllotment> allotments = new ArrayList<>();
+    @Column(name = "sid")
+    private Long societyId;
 
     @PrePersist
     protected void onCreate() {

@@ -13,30 +13,28 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "members")
-public class Member {
+@Table(name = "meetings")
+public class Meeting {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "mid")
-    private Long mid;
+    @Column(name = "meeting_id")
+    private Long meetingId;
 
-    @Column(name = "first_name")
-    private String firstName;
+    @Column(name = "meeting_title")
+    private String title;
 
-    @Column(name = "last_name")
-    private String lastName;
+    @Column(name = "meeting_agenda")
+    private String agenda;
 
-    @Column(name = "email")
-    private String email;
+    @Column(name = "meeting_start_datetime")
+    private LocalDateTime startDateTime;
 
-    @Column(name = "hashed_password")
-    private String hashedPassword;
+    @Column(name = "meeting_end_datetime")
+    private LocalDateTime endDateTime;
 
-    @Column(name = "type")
-    private String type;
-
-    @Column(name = "rid")
-    private Long rid;
+    @Column(name = "sid")
+    private Long sid;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)

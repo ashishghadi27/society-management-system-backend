@@ -6,10 +6,14 @@ import com.root.sms.auth_service.config.ConsulConfig;
 import com.root.sms.auth_service.constants.ExceptionConstants;
 import com.root.sms.auth_service.constants.LoggingConstants;
 import com.root.sms.auth_service.context.SocietyContext;
+import com.root.sms.auth_service.entity.Room;
+import com.root.sms.auth_service.entity.Society;
 import com.root.sms.auth_service.exception.GlobalException;
 import com.root.sms.auth_service.helpers.CookieHelper;
 import com.root.sms.auth_service.helpers.DBHelper;
 import com.root.sms.auth_service.helpers.SessionHelper;
+import com.root.sms.auth_service.repo.RoomRepository;
+import com.root.sms.auth_service.repo.SocietyRepository;
 import com.root.sms.auth_service.service.AsyncService;
 import com.root.sms.auth_service.service.LoginService;
 import com.root.sms.auth_service.utils.CommonUtil;
@@ -23,6 +27,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 @Component
@@ -37,6 +42,8 @@ public class LoginServiceImpl implements LoginService {
     private final DBHelper dbHelper;
 
     private final AsyncService asyncService;
+    private final RoomRepository roomRepository;
+    private final SocietyRepository societyRepository;
 
     private final RedisContextWrapper redisContextWrapper;
 
@@ -85,6 +92,17 @@ public class LoginServiceImpl implements LoginService {
                 redisContextWrapper.setContext(sessionId, context);
 
                 authResponse.setUser(memberVO);
+
+                Optional<Room> roomOptional = roomRepository.findByRid(memberVO.getRoomId());
+                if(roomOptional.isPresent()){
+                    Room room = roomOptional.get();
+                    Optional<Society> societyOptional = societyRepository.findBySidAndIsApprovedTrue(room.getSocietyId());
+                    if (societyOptional.isPresent()){
+                        authResponse.setRoom(room);
+                        authResponse.setSociety(societyOptional.get());
+                    }
+                }
+
                 cookieHelper.setCookie(memberVO);
             }
         } catch (GlobalException e) {

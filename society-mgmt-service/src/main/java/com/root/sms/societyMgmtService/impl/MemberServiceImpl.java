@@ -6,9 +6,14 @@ import com.root.sms.societyMgmtService.exception.ResourceNotFoundException;
 import com.root.sms.societyMgmtService.repo.MemberRepository;
 import com.root.sms.societyMgmtService.repo.RoomRepository;
 import com.root.sms.societyMgmtService.service.MemberService;
+import com.root.sms.societyMgmtService.vo.GenericResponseVO;
 import com.root.sms.societyMgmtService.vo.MemberVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -32,8 +37,26 @@ public class MemberServiceImpl implements MemberService {
         member.setEmail(memberVO.getEmail());
         member.setHashedPassword(memberVO.getHashedPassword());
         member.setType(memberVO.getType());
-        member.setRoom(room);
+        member.setRid(room.getRid());
         memberRepository.save(member);
         return member;
+    }
+
+    @Override
+    public ResponseEntity<GenericResponseVO> getMembersWithNoParking(Long societyId) {
+        List<Member> members = memberRepository.getMembersWithNoParking(societyId);
+        GenericResponseVO genericResponseVO = new GenericResponseVO();
+        genericResponseVO.setData(members);
+        genericResponseVO.setMessage("SUCCESS");
+        return new ResponseEntity<>(genericResponseVO, HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<GenericResponseVO> getMembers(Long societyId) {
+        List<Member> members = memberRepository.getMembersBySociety(societyId);
+        GenericResponseVO genericResponseVO = new GenericResponseVO();
+        genericResponseVO.setData(members);
+        genericResponseVO.setMessage("SUCCESS");
+        return new ResponseEntity<>(genericResponseVO, HttpStatus.OK);
     }
 }

@@ -10,6 +10,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 @ConfigurationPropertiesScan
 public class SocietyMgmtServiceApplication {
 
+
 	public static void main(String[] args) {
 		SpringApplication.run(SocietyMgmtServiceApplication.class, args);
 	}
